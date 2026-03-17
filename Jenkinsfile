@@ -1,16 +1,6 @@
 pipeline {
   agent any
 
-  options {
-    timestamps()
-    ansiColor('xterm')
-  }
-
-  environment {
-    CI = '1'
-    PLAYWRIGHT_BROWSERS_PATH = '0'
-  }
-
   stages {
     stage('Checkout') {
       steps {
