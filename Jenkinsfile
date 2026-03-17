@@ -2,26 +2,21 @@ pipeline {
     agent {
         docker {
             image 'mcr.microsoft.com/playwright:v1.42.1-jammy'
-            args '--shm-size=2g'
+            args '-v /var/run/docker.sock:/var/run/docker.sock -v $WORKSPACE:$WORKSPACE -w $WORKSPACE --shm-size=2g'
         }
     }
+
     stages {
         stage('Checkout') {
-            steps {
-                checkout scm
-            }
+            steps { checkout scm }
         }
 
         stage('Install') {
-            steps {
-                sh 'npm ci'
-            }
+            steps { sh 'npm ci' }
         }
 
         stage('Test') {
-            steps {
-                sh 'npm test'
-            }
+            steps { sh 'npm test' }
         }
     }
 
