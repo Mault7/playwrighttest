@@ -1,34 +1,33 @@
 pipeline {
-  agent any
+    agent {
+        docker {
+            image 'mcr.microsoft.com/playwright:v1.42.1-jammy'
+            args '--shm-size=2g'
+        }
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
 
-  tools {
-    nodejs '24.14.0LTS'
-  }
+        stage('Install') {
+            steps {
+                sh 'npm ci'
+            }
+        }
 
-  stages {
-    stage('Checkout') {
-      steps {
-        checkout scm
-      }
+        stage('Test') {
+            steps {
+                sh 'npm test'
+            }
+        }
     }
 
-    stage('Install') {
-      steps {
-        sh 'npm ci'
-        sh 'npx playwright install'
-      }
+    post {
+        always {
+            archiveArtifacts artifacts: 'test-results/**,playwright-report/**', allowEmptyArchive: true
+        }
     }
-
-    stage('Test') {
-      steps {
-        sh 'npm test'
-      }
-    }
-  }
-
-  post {
-    always {
-      archiveArtifacts artifacts: 'test-results/**,playwright-report/**', allowEmptyArchive: true
-    }
-  }
 }
