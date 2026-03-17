@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Playwright Practice</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <header class="header">
+        <div>
+          <p class="eyebrow">Laboratorio</p>
+          <h1>Playwright Practice</h1>
+          <p class="subtitle">Un mini gestor de tareas para practicar selectores, fixtures, esperas y assertions.</p>
+        </div>
+        <div class="badge" data-testid="clock">--:--</div>
+      </header>
+
+      <section class="panel" aria-label="Nueva tarea">
+        <form id="todo-form" class="form" data-testid="todo-form">
+          <input
+            id="todo-input"
+            name="title"
+            type="text"
+            placeholder="Escribe una tarea..."
+            autocomplete="off"
+            data-testid="todo-input"
+            required
+          />
+          <select id="priority" name="priority" data-testid="priority-select">
+            <option value="low">Baja</option>
+            <option value="medium" selected>Media</option>
+            <option value="high">Alta</option>
+          </select>
+          <button type="submit" data-testid="add-button">Agregar</button>
+        </form>
+        <p class="hint" data-testid="hint">Tip: usa el selector `data-testid` para tus tests.</p>
+      </section>
+
+      <section class="panel" aria-label="Filtros">
+        <div class="filters">
+          <button class="filter" data-filter="all" data-testid="filter-all">Todos</button>
+          <button class="filter" data-filter="active" data-testid="filter-active">Activos</button>
+          <button class="filter" data-filter="done" data-testid="filter-done">Hechos</button>
+        </div>
+        <div class="stats" data-testid="stats">0 tareas</div>
+      </section>
+
+      <section class="panel" aria-label="Lista de tareas">
+        <ul id="todo-list" class="list" data-testid="todo-list"></ul>
+        <div id="empty" class="empty" data-testid="empty-state">Aun no hay tareas.</div>
+      </section>
+
+      <section class="panel" aria-label="Acciones">
+        <div class="actions">
+          <button id="seed" class="ghost" data-testid="seed-button">Cargar tareas demo</button>
+          <button id="clear" class="ghost" data-testid="clear-button">Borrar completadas</button>
+        </div>
+      </section>
+    </main>
+
+    <template id="todo-item-template">
+      <li class="item" data-testid="todo-item">
+        <label class="check">
+          <input type="checkbox" data-testid="todo-toggle" />
+          <span class="title" data-testid="todo-title"></span>
+        </label>
+        <span class="pill" data-testid="todo-priority"></span>
+        <button class="icon" data-testid="delete-button" aria-label="Eliminar">x</button>
+      </li>
+    </template>
+
+    <script src="/app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,8 @@
+docker-plugin
+cloudbees-folder
+pipeline-utility-steps
+workflow-aggregator
+docker-workflow
+docker-commons
+docker-build-step
+docker-compose-build-step
