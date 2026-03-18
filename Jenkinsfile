@@ -41,7 +41,7 @@ pipeline {
             steps {
                 input message: '¿Ejecutar deploy simulado?', ok: 'Deploy'
                 sh 'echo \"Deploy simulado OK\"'
-                sh 'echo \"Deploy a ${params.ENV} completado\"'
+                sh "echo \'Deploy a ${params.ENV} completado\'"
             }
         }
     }
