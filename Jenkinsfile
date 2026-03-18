@@ -14,14 +14,32 @@ pipeline {
             steps { sh 'npm ci' }
         }
 
-        stage('Test') {
-            steps { sh 'npm test' }
+        stage('Build') {
+            steps { sh 'npm run build' }
+        }
+
+        stage('Tests') {
+            parallel {
+                stage('Unit Tests') {
+                    steps { sh 'npm run test:unit' }
+                }
+                stage('E2E Tests') {
+                    steps { sh 'npm run test:e2e' }
+                }
+            }
+        }
+
+        stage('Deploy (Manual)') {
+            steps {
+                input message: '¿Ejecutar deploy simulado?', ok: 'Deploy'
+                sh 'echo \"Deploy simulado OK\"'
+            }
         }
     }
 
     post {
         always {
-            archiveArtifacts artifacts: 'test-results/**,playwright-report/**', allowEmptyArchive: true
+            archiveArtifacts artifacts: 'dist/**,test-results/**,playwright-report/**', allowEmptyArchive: true
         }
     }
 }
