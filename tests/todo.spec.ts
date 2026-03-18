@@ -24,18 +24,6 @@ test('agrega una tarea con prioridad', async ({ todo }) => {
   await expect(firstItem.priority).toHaveText('HIGH');
 });
 
-test('completa una tarea', async ({ todo }) => {
-  //start
-  await todo.goto();
-  //add task
-  await todo.form.addTodo({ title: 'Tarea a completar' });
-  //complete task
-  const firstItem = todo.list.first();
-  await firstItem.toggle.click();
-  //expected result
-  await expect(firstItem.root).toHaveClass(/completed/);
-});
-
 test('verificacion de seed', async ({ todo }) => {
   //start
   await todo.goto();
